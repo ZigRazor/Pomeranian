@@ -44,6 +44,12 @@ CPMAddPackage(
     GIT_TAG origin/main
 )
 
+CPMAddPackage(
+    NAME uuid
+    GITHUB_REPOSITORY mariusbancila/stduuid
+    GIT_TAG origin/master
+)
+
 
 
 add_library(    ${PROJECT_NAME} SHARED
@@ -53,9 +59,10 @@ add_library(    ${PROJECT_NAME} SHARED
 target_include_directories( ${PROJECT_NAME} PUBLIC 
                             include/
                             JackRussell
+							uuid
                             )
 
-target_link_libraries(  ${PROJECT_NAME} PUBLIC JackRussell)
+target_link_libraries(  ${PROJECT_NAME} PUBLIC JackRussell uuid)
 
 file( GLOB HEADERS_FILES "include/*.h*" )
 
