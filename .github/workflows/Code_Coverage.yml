@@ -31,7 +31,7 @@ jobs:
 
       - name: run
         working-directory: ${{github.workspace}}/build/test
-        run: ./jackrussell_test_exe
+        run: ./pomeranian_test_exe
 
       - name: create Report
         working-directory: ${{github.workspace}}/build/test

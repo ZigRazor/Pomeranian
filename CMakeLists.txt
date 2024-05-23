@@ -56,7 +56,7 @@ target_include_directories( ${PROJECT_NAME} PUBLIC
 							uuid
                             )
 
-target_link_libraries(  ${PROJECT_NAME} PUBLIC JackRussell uuid)
+target_link_libraries(  ${PROJECT_NAME} PUBLIC JackRussell)
 
 file( GLOB HEADERS_FILES "include/*.h*" )
 
