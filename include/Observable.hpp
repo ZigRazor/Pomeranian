@@ -1,30 +1,50 @@
 #ifndef DOGBREEDS_POMERANIAN_OBSERVABLE_H
 #define DOGBREEDS_POMERANIAN_OBSERVABLE_H
 
+#include <memory>
+
 #include "ObservableInterface.h"
-#include "uuid.h"
+#include "Observer.hpp"
+#include "TopicManager.h"
+#include "UniqueId.h"
+#include "UniqueIdGenerator.h"
 
 namespace DogBreeds {
 namespace Pomeranian {
 template <typename T>
-class Observable : public ObservableInterface {
+class Observable : public ObservableInterface<T> {
  private:
   T m_value;
-  uuid const id;
+  const UniqueId id = UniqueIdGenerator::getInstance().generateId();
+
  public:
-  Observable(){
-    std::random_device rd;
-    auto seed_data = std::array<int, std::mt19937::state_size> {};
-    std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
-    std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
-    std::mt19937 generator(seq);
-    uuids::uuid_random_generator gen{generator};
-    id = gen();
+  Observable() {
+    JackRussell::TopicManager::getInstance()
+        .createTopic<std::pair<std::shared_ptr<T>, std::shared_ptr<T>>>(
+            id.getStringId());
   }
+
+  Observable(const T& value) : m_value(value) {
+    JackRussell::TopicManager::getInstance()
+        .createTopic<std::pair<std::shared_ptr<T>, std::shared_ptr<T>>>(
+            id.getStringId());
+  }
+
   virtual ~Observable() = default;
-  void registerObserver(std::shared_ptr<Observer> observer) override;
-  void set(const T& value);
-  void get(const T& value);
+
+  void registerObserver(std::shared_ptr<Observer<T>> observer) override {
+    JackRussell::TopicManager::getInstance().subscribeToTopic(observer,
+                                                              id.getStringId());
+  }
+
+  void set(const T& value) {
+    JackRussell::TopicManager::getInstance().publishToTopic(
+        id.getStringId(),
+        std::make_shared<std::pair<std::shared_ptr<T>, std::shared_ptr<T>>>(
+            std::make_shared<T>(m_value), std::make_shared<T>(value)));
+    m_value = value;
+  }
+  const T& get() const { return m_value; }
 };
 }  // namespace Pomeranian
 }  // namespace DogBreeds

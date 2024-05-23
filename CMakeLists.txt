@@ -19,6 +19,7 @@ if(DEBUG)
 
 endif(DEBUG)
 
+
 # set up CPM.cmake
 if(CPM_SOURCE_CACHE)
 	set(CPM_DOWNLOAD_LOCATION "${CPM_SOURCE_CACHE}/cpm/CPM.cmake")
@@ -43,13 +44,6 @@ CPMAddPackage(
     GITHUB_REPOSITORY ZigRazor/JackRussell
     GIT_TAG origin/main
 )
-
-CPMAddPackage(
-    NAME uuid
-    GITHUB_REPOSITORY mariusbancila/stduuid
-    GIT_TAG origin/master
-)
-
 
 
 add_library(    ${PROJECT_NAME} SHARED
