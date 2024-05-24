@@ -15,7 +15,8 @@ template <typename T>
 class Observable : public ObservableInterface<T> {
  private:
   T m_value;
-  const UniqueId id = UniqueIdGenerator::getInstance().generateId();
+  const Chihuahua::UniqueId id =
+      Chihuahua::UniqueIdGenerator::getInstance().generateId();
 
  public:
   Observable() {

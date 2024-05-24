@@ -4,7 +4,9 @@ namespace DogBreeds {
 namespace Pomeranian {
 AbstractObserver::AbstractObserver() {}
 
-const UniqueId& AbstractObserver::getUniqueId() const { return m_id; }
+const Chihuahua::UniqueId& AbstractObserver::getUniqueId() const {
+  return m_id;
+}
 
 }  // namespace Pomeranian
 

@@ -45,6 +45,12 @@ CPMAddPackage(
     GIT_TAG origin/main
 )
 
+CPMAddPackage(
+    NAME Chihuahua
+    GITHUB_REPOSITORY ZigRazor/Chihuahua
+    GIT_TAG origin/main
+)
+
 
 add_library(    ${PROJECT_NAME} SHARED
                 ${SRC_FILES}
@@ -53,10 +59,10 @@ add_library(    ${PROJECT_NAME} SHARED
 target_include_directories( ${PROJECT_NAME} PUBLIC 
                             include/
                             JackRussell
-							uuid
+							Chihuahua
                             )
 
-target_link_libraries(  ${PROJECT_NAME} PUBLIC JackRussell)
+target_link_libraries(  ${PROJECT_NAME} PUBLIC JackRussell Chihuahua)
 
 file( GLOB HEADERS_FILES "include/*.h*" )
 

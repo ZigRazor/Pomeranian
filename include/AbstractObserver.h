@@ -10,12 +10,13 @@ namespace DogBreeds {
 namespace Pomeranian {
 class AbstractObserver {
  private:
-  const UniqueId m_id = UniqueIdGenerator::getInstance().generateId();
+  const Chihuahua::UniqueId m_id =
+      Chihuahua::UniqueIdGenerator::getInstance().generateId();
 
  public:
   AbstractObserver();
   virtual ~AbstractObserver() = default;
-  const UniqueId& getUniqueId() const;
+  const Chihuahua::UniqueId& getUniqueId() const;
 };
 }  // namespace Pomeranian
 }  // namespace DogBreeds
