@@ -42,6 +42,8 @@ target_include_directories(pomeranian_test_exe
     PUBLIC "${PROJECT_SOURCE_DIR}/include"
     PUBLIC "${PROJECT_SOURCE_DIR}/test"
 	Labrador
+	Chihuahua
+	Pomeranian
 )
 
 target_link_libraries(pomeranian_test_exe
@@ -51,9 +53,11 @@ target_link_libraries(pomeranian_test_exe
     pthread
 	Labrador
 	JackRussell
+	Chihuahua
+	Pomeranian
 )
 
-#add_test(AbstractTopicTest pomeranian_test_exe --gtest_filter=AbstractTopicTest*)
+add_test(PomeranianTest1 pomeranian_test_exe --gtest_filter=PomeranianTest1*)
 #add_test(TopicManagerTest pomeranian_test_exe --gtest_filter=TopicManagerTest*)
    
 
