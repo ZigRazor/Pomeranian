@@ -38,6 +38,11 @@ class Observable : public ObservableInterface<T> {
                                                               id.getStringId());
   }
 
+  void unregisterObserver(std::shared_ptr<Observer<T>> observer) override {
+    JackRussell::TopicManager::getInstance().unsubscribeFromTopic(
+        observer, id.getStringId());
+  }
+
   void set(const T& value) {
     JackRussell::TopicManager::getInstance().publishToTopic(
         id.getStringId(),

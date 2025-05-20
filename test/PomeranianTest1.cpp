@@ -38,8 +38,42 @@ TEST_F(PomeranianTest1, ObserverOnChange) {
   EXPECT_EQ(observable.get(), 10);
   observable.registerObserver(intObserver);
   EXPECT_CALL(*intObserver,
-              onChange(std::make_shared<int>(10), std::make_shared<int>(15)))
+              onChange(testing::Truly([](const std::shared_ptr<int>& p) {
+                         return *p == 10;
+                       }),
+                       testing::Truly([](const std::shared_ptr<int>& p) {
+                         return *p == 15;
+                       })))
       .Times(1);
   observable.set(15);
   EXPECT_EQ(observable.get(), 15);
+}
+
+TEST_F(PomeranianTest1, unregisterObserver) {
+  Observable<int> observable(10);
+  EXPECT_EQ(observable.get(), 10);
+  observable.registerObserver(intObserver);
+  EXPECT_CALL(*intObserver,
+              onChange(testing::Truly([](const std::shared_ptr<int>& p) {
+                         return *p == 10;
+                       }),
+                       testing::Truly([](const std::shared_ptr<int>& p) {
+                         return *p == 15;
+                       })))
+      .Times(1);
+  observable.set(15);
+  EXPECT_EQ(observable.get(), 15);
+  usleep(1000);  // Give some time for the observer to process the change
+  // Unregister the observer
+  observable.unregisterObserver(intObserver);
+  EXPECT_CALL(*intObserver,
+              onChange(testing::Truly([](const std::shared_ptr<int>& p) {
+                         return *p == 15;
+                       }),
+                       testing::Truly([](const std::shared_ptr<int>& p) {
+                         return *p == 20;
+                       })))
+      .Times(0);
+  observable.set(20);
+  EXPECT_EQ(observable.get(), 20);
 }
