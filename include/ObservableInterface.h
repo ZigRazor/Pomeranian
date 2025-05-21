@@ -9,8 +9,9 @@ namespace Pomeranian {
 template <typename T>
 class ObservableInterface {
  public:
-  virtual void registerObserver(std::shared_ptr<Observer<T>> observer) = 0;
-  virtual void unregisterObserver(std::shared_ptr<Observer<T>> observer) = 0;
+  virtual void registerObserver(std::shared_ptr<AbstractObserver> observer) = 0;
+  virtual void unregisterObserver(
+      std::shared_ptr<AbstractObserver> observer) = 0;
 };
 }  // namespace Pomeranian
 }  // namespace DogBreeds

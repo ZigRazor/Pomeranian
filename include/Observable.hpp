@@ -33,14 +33,14 @@ class Observable : public ObservableInterface<T> {
 
   virtual ~Observable() = default;
 
-  void registerObserver(std::shared_ptr<Observer<T>> observer) override {
-    JackRussell::TopicManager::getInstance().subscribeToTopic(observer,
-                                                              id.getStringId());
+  void registerObserver(std::shared_ptr<AbstractObserver> observer) override {
+    JackRussell::TopicManager::getInstance().subscribeToTopic(
+        std::dynamic_pointer_cast<Observer<T>>(observer), id.getStringId());
   }
 
-  void unregisterObserver(std::shared_ptr<Observer<T>> observer) override {
+  void unregisterObserver(std::shared_ptr<AbstractObserver> observer) override {
     JackRussell::TopicManager::getInstance().unsubscribeFromTopic(
-        observer, id.getStringId());
+        std::dynamic_pointer_cast<Observer<T>>(observer), id.getStringId());
   }
 
   void set(const T& value) {
